@@ -34,6 +34,19 @@ function Verifier() {
     handleAnalyze();
   };
 
+  function filterJSONObject(jsonObject) {
+    const keysToRemove = ["Contrast", "Overall Quality", "Axial Nonuniformity", "Modulation", "Grid Nonuniformity", "Unused Error Correction", "Fixed Pattern Damage", "NA", "Aperture"];
+    const filteredObject = {};
+  
+    for (let key in jsonObject) {
+      if (keysToRemove.includes(key)) {
+        filteredObject[key] = jsonObject[key];
+      }
+    }
+  
+    return filteredObject;
+  }
+
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
 
@@ -64,7 +77,8 @@ function Verifier() {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         const d = JSON.parse(response?.data?.jsonData)
-        setResult(d);
+       
+        setResult(filterJSONObject(d));
         setVerificationGrade(getOverallGrade(d));
       } catch (error) {
         const d = {
@@ -124,7 +138,7 @@ function Verifier() {
           </TableHead>
           <TableBody>
             {Object.entries(result).map(([key, value]) => (
-              <TableRow key={key}>
+              <TableRow key={key} style={{background : key === "Overall Quality" ? "#afa" : null}}>
                 <TableCell>{key}</TableCell>
                 <TableCell>{(key === "Contrast Uniformity" || key === "Aperture") ? value.toFixed(2) : value}</TableCell>
                 <TableCell >{(key === "Contrast Uniformity" || key === "Aperture") ? (value * 100).toFixed(2) : value * 25}</TableCell>
@@ -137,7 +151,7 @@ function Verifier() {
           </TableBody>
         </Table>
       </TableContainer>
-      {(
+      {/* {(
         <div style={{ marginTop: "20px" }}>
           <Typography variant="h5" gutterBottom>
             Verification Grade
@@ -146,7 +160,7 @@ function Verifier() {
             {getGrade("All", verificationGrade)} : {(verificationGrade).toFixed(2)}
           </Typography>
         </div>
-      )}
+      )} */}
     </div>
   );
 
