@@ -104,19 +104,29 @@ function Verifier() {
 
   function getGrade(key, score) {
     score = (key === "Contrast Uniformity" || key === "Aperture") ? score : (key === "All") ? score = score/100 : score = score/4;
-    if (score >= 1) return "A";
-      else if (score >= 0.75) return "B";
-      else if (score >= 0.5) return "C";
-      else if (score >= 0.25) return "D";
+    // if (score >= 1) return "A";
+    //   else if (score >= 0.75) return "B";
+    //   else if (score >= 0.5) return "C";
+    //   else if (score >= 0.25) return "D";
+    //   else return "F"
+      if (score >= 0.875) return "A";
+      else if (score >= 0.625) return "B";
+      else if (score >= 0.375) return "C";
+      else if (score >= 0.125) return "D";
       else return "F"
   }
 
   function getColor(key, score) {
     score = (key === "Contrast Uniformity" || key === "Aperture") ? score : (key === "All") ? score = score/100 : score = score/4;
-    if (score >= 1) return "green"
-    else if (score >= 0.75) return "blue";
-    else if (score >= 0.5) return "orange";
-    else if (score >= 0.25) return "red";
+    // if (score >= 1) return "green"
+    // else if (score >= 0.75) return "blue";
+    // else if (score >= 0.5) return "orange";
+    // else if (score >= 0.25) return "red";
+    // else return "black"
+    if (score >= 0.875) return "green"
+    else if (score >= 0.625) return "blue";
+    else if (score >= 0.375) return "orange";
+    else if (score >= 0.125) return "red";
     else return "black"
   }
 
